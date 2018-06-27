@@ -65,7 +65,11 @@ End Function
 '----------------------------------------------------------------------------
 '   Description     :   Removes illegal worksheet name characters
 '----------------------------------------------------------------------------
-Public Function CleanSheetName(DirtyString As String, ReplaceChar As String) As String
+Public Function CleanSheetName( _
+    DirtyString As String, _
+    ReplaceChar As String _
+) As String
+
     Dim objRegex As Object
     Set objRegex = CreateObject("vbscript.regexp")
     With objRegex
@@ -81,9 +85,7 @@ End Function
 Public Function ColorToHex( _
     TargetRange As Range _
 ) As String
-    '**
-    '*  Variables
-    '**
+
     Dim sColor As String
 
     sColor = Right("000000" & Hex(TargetRange.Interior.Color), 6)
@@ -97,9 +99,7 @@ Public Function ColorToRGB( _
     TargetRange As Range, _
     Optional WhichVal As String _
 ) As String
-    '**
-    '*  Variables
-    '**
+
     Dim C As Long
     Dim R As Long
     Dim G As Long
@@ -124,42 +124,62 @@ End Function
 '----------------------------------------------------------------------------
 '   Description     :   Creates a named range in the workbook
 '----------------------------------------------------------------------------
-Public Sub CreateNamedRange(RangeName As String, SheetName As String, TargetRange As Range)
+Public Sub CreateNamedRange( _
+    RangeName As String, _
+    SheetName As String, _
+    TargetRange As Range _
+)
+
     ThisWorkbook.Names.Add Name:=RangeName, RefersTo:="=" & "'" & SheetName & "'!" & TargetRange.Address
 End Sub
 
 '----------------------------------------------------------------------------
 '   Description     :   Takes a passed column letter and returns the column number
 '----------------------------------------------------------------------------
-Public Function ColumnLetterToNumber(ColumnLetter As String) As Long
+Public Function ColumnLetterToNumber( _
+    ColumnLetter As String _
+) As Long
+    
     ColumnLetterToNumber = Range(ColumnLetter & 1).Column
 End Function
 
 '----------------------------------------------------------------------------
 '   Description     :   Takes a passed column number and returns the column letter
 '----------------------------------------------------------------------------
-Public Function ColumnNumberToLetter(ColumnNumber As Long) As String
+Public Function ColumnNumberToLetter( _
+    ColumnNumber As Long _
+) As String
+    
     ColumnNumberToLetter = Split(Cells(1, ColumnNumber).Address, "$")(1)
 End Function
 
 ' ---------------------------------------------------------------------------
 '   Description     :   Get last used row in a worksheet
 ' ---------------------------------------------------------------------------
-Public Function GetLastUsedRowInSheet(TargetSheet As Worksheet) As Long
+Public Function GetLastUsedRowInSheet( _
+    TargetSheet As Worksheet _
+) As Long
+    
     GetLastUsedRowInSheet = TargetSheet.UsedRange.Rows(TargetSheet.UsedRange.Rows.Count).Row
 End Function
 
 ' ---------------------------------------------------------------------------
 '   Description     :   Get last used column in a worksheet
 ' ---------------------------------------------------------------------------
-Public Function GetLastUsedColumnInSheet(TargetSheet As Worksheet) As Long
+Public Function GetLastUsedColumnInSheet( _
+    TargetSheet As Worksheet _
+) As Long
+    
     GetLastUsedColumnInSheet = TargetSheet.UsedRange.Columns(TargetSheet.UsedRange.Columns.Count).Column
 End Function
 
 ' ---------------------------------------------------------------------------
 '   Description     :   Checks if a named range exists
 ' ---------------------------------------------------------------------------
-Public Function NamedRangeExists(RangeName As String) As Boolean
+Public Function NamedRangeExists( _
+    RangeName As String _
+) As Boolean
+    
     Dim LoopName As Name
     
     For Each LoopName In ThisWorkbook.Names
@@ -175,7 +195,11 @@ End Function
 ' ---------------------------------------------------------------------------
 '   Description     :   Removes and re-creates a named range
 ' ---------------------------------------------------------------------------
-Public Sub ReplaceNamedRange(RangeName As String, SheetName As String, TargetRange As Range)
+Public Sub ReplaceNamedRange( _
+    RangeName As String, _
+    SheetName As String, _
+    TargetRange As Range _
+)
     If NamedRangeExists(RangeName) = True Then ThisWorkbook.Names(RangeName).Delete
     CreateNamedRange RangeName, SheetName, TargetRange
 End Sub
