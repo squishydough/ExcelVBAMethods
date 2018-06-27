@@ -1,23 +1,4 @@
 Attribute VB_Name = "ExcelVBAMethods"
-'*****************************************************************************
-'   Description         :   A collection of useful Excel methods
-'   Methods             :   BrowseForFile
-'                           CleanSheetName
-'                           ColorToHex
-'                           ColorToRGB
-'                           ColumnLetterToNumber
-'                           ColumnNumberToLetter
-'                           CreateNamedRange
-'                           NamedRangeExists
-'                           ReplaceNamedRange
-'                           RescopeNamedRangesToWorkbook
-'*****************************************************************************
-
-
-
-
-
-
 ' ---------------------------------------------------------------------------
 '   Description         :   Allows the user to browse the computer for a fil
 ' ---------------------------------------------------------------------------
