@@ -1,7 +1,19 @@
-Attribute VB_Name = "ExcelVBAMethods"
-' ---------------------------------------------------------------------------
-'   Description         :   Allows the user to browse the computer for a fil
-' ---------------------------------------------------------------------------
+'---------------------------------------------------------------------------
+'   Description :   Adds a row to range and resizes the range
+'---------------------------------------------------------------------------
+Public Sub AddRowToRange( _
+    TargetRange As Range _
+)
+
+    With TargetRange
+        .Rows(.Rows.Count + 1).Insert CopyOrigin:=xlFormatFromLeftOrAbove
+        .Resize(.Rows.Count + 1, .Columns.Count).Name = .Name.Name
+    End With
+End Sub
+
+'---------------------------------------------------------------------------
+'   Description :   Allows the user to browse the computer for a file
+'---------------------------------------------------------------------------
 Public Function BrowseForFile( _
     FilterTitle As String, _
     FilterTypes As String, _
