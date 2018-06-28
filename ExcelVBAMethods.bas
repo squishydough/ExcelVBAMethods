@@ -56,6 +56,18 @@ Public Function BrowseForFile( _
 End Function
 
 '----------------------------------------------------------------------------
+'   Description     :   Opens a userform and centers it on the user's screen
+'----------------------------------------------------------------------------
+Public Sub CenterUserForm(frm As Object)
+    With frm
+        .StartUpPosition = 0
+        .Left = Application.ActiveWindow.Left + (0.5 * Application.Width) - (0.5 * .Width)
+        .Top = Application.Top + (0.5 * Application.Height) - (0.5 * .Height)
+        .Show False
+    End With
+End Sub
+
+'----------------------------------------------------------------------------
 '   Description     :   Removes illegal worksheet name characters
 '----------------------------------------------------------------------------
 Public Function CleanSheetName( _
