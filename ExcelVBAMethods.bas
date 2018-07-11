@@ -164,11 +164,13 @@ End Function
 '                       FormatType.
 '
 '                       Default format type is the English spelling of the day.
+'                       Default ExcludedDays are Saturdays and Sundays
 ' ---------------------------------------------------------------------------
 Public Function GetDatesBetweenDates( _
     FirstDate As Date, _
     LastDate As Date, _
-    Optional FormatType As String _
+    Optional FormatType As String, _
+    Optional ExcludedDays As Collection _
 ) As Collection
 
     '**
@@ -179,9 +181,20 @@ Public Function GetDatesBetweenDates( _
     End If
     
     '**
+    '*  If no ExcludedDays are passed, then default to no weekends
+    '**
+    If ExcludedDays Is Nothing Then
+        Set ExcludedDays = New Collection
+        ExcludedDays.Add "Saturday"
+        ExcludedDays.Add "Sunday"
+    End If
+    
+    '**
     '*  Variable declarations
     '**
     Dim LoopDate As Date                    '*  Stores the loop generated date
+    Dim LoopDay As String                   '*  The English day of the current loop generated date
+    Dim i As Integer                        '*  Used for looping through the ExcludedDays collection
     Dim TempDate As Date                    '*  Used for swapping the passed dates if needed
     Dim DatesCollection As New Collection   '*  Stores the dates to be returned
     
@@ -200,8 +213,18 @@ Public Function GetDatesBetweenDates( _
     '**
     LoopDate = FirstDate
     Do While LoopDate < LastDate
+        '*  Check if the day should be added
+        '*  If current day is excluded, go to next loop iteration
+        If ExcludedDays.Count > 0 Then
+            For i = 1 To ExcludedDays.Count Step 1
+                LoopDay = Format(LoopDate, "dddd")
+                If ExcludedDays.Item(i) = LoopDay Then GoTo NextLoop
+            Next i
+        End If
+        
         '*  Add formatted date to collection
         DatesCollection.Add Format(LoopDate, FormatType)
+NextLoop:
         '*  Increment the date
         LoopDate = DateAdd("d", 1, LoopDate)
     Loop
