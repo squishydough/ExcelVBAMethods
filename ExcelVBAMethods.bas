@@ -159,6 +159,57 @@ Public Function ColumnNumberToLetter( _
 End Function
 
 ' ---------------------------------------------------------------------------
+'   Description     :   Returns a collection of dates between two dates
+'                       (including the passed dates) formatted in the passed 
+'                       FormatType.
+'
+'                       Default format type is the English spelling of the day.
+' ---------------------------------------------------------------------------
+Public Function GetDatesBetweenDates( _
+    FirstDate As Date, _
+    LastDate As Date, _
+    Optional FormatType As String _
+) As Collection
+
+    '**
+    '*  If no format is passed, default to the English day
+    '**
+    If Len(FormatType) = 0 Then
+        FormatType = "dddd"
+    End If
+    
+    '**
+    '*  Variable declarations
+    '**
+    Dim LoopDate As Date                    '*  Stores the loop generated date
+    Dim TempDate As Date                    '*  Used for swapping the passed dates if needed
+    Dim DatesCollection As New Collection   '*  Stores the dates to be returned
+    
+    '**
+    '*  Error checking - if Last Date is greater than
+    '*  FirstDate, swap them
+    '**
+    If LastDate < FirstDate Then
+        TempDate = FirstDate
+        FirstDate = LastDate
+        LastDate = TempDate
+    End If
+    
+    '**
+    '*  Loop between the two dates, adding the days to the collection
+    '**
+    LoopDate = FirstDate
+    Do While LoopDate < LastDate
+        '*  Add formatted date to collection
+        DatesCollection.Add Format(LoopDate, FormatType)
+        '*  Increment the date
+        LoopDate = DateAdd("d", 1, LoopDate)
+    Loop
+    
+    Set GetDatesBetweenDates = DatesCollection
+End Function
+
+' ---------------------------------------------------------------------------
 '   Description     :   Get last used row in a worksheet
 ' ---------------------------------------------------------------------------
 Public Function GetLastUsedRowInSheet( _
