@@ -232,24 +232,83 @@ NextLoop:
     Set GetDatesBetweenDates = DatesCollection
 End Function
 
-' ---------------------------------------------------------------------------
-'   Description     :   Get last used row in a worksheet
-' ---------------------------------------------------------------------------
-Public Function GetLastUsedRowInSheet( _
-    TargetSheet As Worksheet _
-) As Long
+'----------------------------------------------------------------------------
+'   Description     :   Returns the last used row in a column, range, or
+'                       worksheet. Column can be passed as a string or integer.
+'
+'   Requires        :   ColumnLetterToNumber method
+'----------------------------------------------------------------------------
+Public Function GetLastUsedRow(SearchWhere As Variant, Optional TargetSheet As Worksheet) As Long
+    '**
+    '*  If TargetSheet is not provided, default to activesheet
+    '**
+    If TargetSheet Is Nothing Then Set TargetSheet = ActiveSheet
     
-    GetLastUsedRowInSheet = TargetSheet.UsedRange.Rows(TargetSheet.UsedRange.Rows.Count).Row
+    '**
+    '*  Return value depending on passed argument type
+    '**
+    If TypeName(SearchWhere) = "Integer" Then
+        With TargetSheet
+            GetLastUsedRow = .Cells(.Rows.Count, SearchWhere).End(xlUp).Row
+        End With
+    ElseIf TypeName(SearchWhere) = "String" Then
+        With TargetSheet
+            GetLastUsedRow = .Cells(.Rows.Count, ColumnLetterToNumber(CStr(SearchWhere))).End(xlUp).Row
+        End With
+    ElseIf TypeName(SearchWhere) = "Range" Then
+        With SearchWhere
+            GetLastUsedRow = .Rows(.Rows.Count).Row
+        End With
+    ElseIf TypeName(SearchWhere) = "Worksheet" Then
+        With SearchWhere
+            GetLastUsedRow = .UsedRange.Rows(.UsedRange.Rows.Count).Row
+        End With
+    Else
+        MsgBox "Error - you passed an invalid type to GetLastUsedRow.", vbOKOnly + vbCritical, "Error!"
+        GetLastUsedRow = 0
+    End If
+    
 End Function
 
-' ---------------------------------------------------------------------------
-'   Description     :   Get last used column in a worksheet
-' ---------------------------------------------------------------------------
-Public Function GetLastUsedColumnInSheet( _
-    TargetSheet As Worksheet _
-) As Long
+'----------------------------------------------------------------------------
+'   Description     :   Returns the last used column in a row, range, or
+'                       worksheet as a number.
+'----------------------------------------------------------------------------
+Public Function GetLastUsedColumnNumber(SearchWhere As Variant, Optional TargetSheet As Worksheet) As Long
+    '**
+    '*  If TargetSheet is not provided, default to activesheet
+    '**
+    If TargetSheet Is Nothing Then Set TargetSheet = ActiveSheet
     
-    GetLastUsedColumnInSheet = TargetSheet.UsedRange.Columns(TargetSheet.UsedRange.Columns.Count).Column
+    '**
+    '*  Return value depending on passed argument type
+    '**
+    If TypeName(SearchWhere) = "Integer" Then
+        With TargetSheet
+            GetLastUsedColumnNumber = .Cells(SearchWhere, .Columns.Count).End(xlToLeft).Column
+        End With
+    ElseIf TypeName(SearchWhere) = "Range" Then
+        With SearchWhere
+            GetLastUsedColumnNumber = .Columns(.Columns.Count).Column
+        End With
+    ElseIf TypeName(SearchWhere) = "Worksheet" Then
+        With SearchWhere
+            GetLastUsedColumnNumber = .UsedRange.Columns(.UsedRange.Columns.Count).Column
+        End With
+    Else
+        MsgBox "Error - you passed an invalid type to GetLastUsedColumnNumber.", vbOKOnly + vbCritical, "Error!"
+        GetLastUsedColumnNumber = 0
+    End If
+    
+End Function
+'----------------------------------------------------------------------------
+'   Description     :   Returns the last used column in a row, range, or
+'                       worksheet as a letter.
+'
+'   Requires        :   GetLastUsedColumnNumber, ColumnNumberToLetter
+'----------------------------------------------------------------------------
+Public Function GetLastUsedColumnLetter(SearchWhere As Variant, Optional TargetSheet As Worksheet) As String
+    GetLastUsedColumnLetter = ColumnNumberToLetter(GetLastUsedColumnNumber(SearchWhere, TargetSheet))
 End Function
 
 ' ---------------------------------------------------------------------------
