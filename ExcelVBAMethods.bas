@@ -212,7 +212,7 @@ Public Function GetDatesBetweenDates( _
     '*  Loop between the two dates, adding the days to the collection
     '**
     LoopDate = FirstDate
-    Do While LoopDate < LastDate
+    Do While LoopDate <= LastDate
         '*  Check if the day should be added
         '*  If current day is excluded, go to next loop iteration
         If ExcludedDays.Count > 0 Then
