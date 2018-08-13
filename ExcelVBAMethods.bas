@@ -385,11 +385,10 @@ End Sub
 ' ---------------------------------------------------------------------------
 '   Description     :   Checks if a worksheet exists
 ' ---------------------------------------------------------------------------
-Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook, Optional CheckCodeName As Boolean) As Boolean
+Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook, Optional CheckCodeName = True) As Boolean
     Dim Sheet As Worksheet
 
     If TargetBook Is Nothing Then Set TargetBook = ActiveWorkbook
-    If IsMissing(CheckCodeName) Then CheckCodeName = True
 
     For Each Sheet In TargetBook.Worksheets
         If SheetName = Sheet.Name Then
