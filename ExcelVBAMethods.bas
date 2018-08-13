@@ -381,3 +381,27 @@ Public Sub RescopeNamedRangesToWorkbook()
         End If
     Next objName
 End Sub
+
+' ---------------------------------------------------------------------------
+'   Description     :   Checks if a worksheet exists
+' ---------------------------------------------------------------------------
+Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook, Optional CheckCodeName As Boolean) As Boolean
+    Dim Sheet As Worksheet
+
+    If TargetBook Is Nothing Then Set TargetBook = ActiveWorkbook
+    If IsMissing(CheckCodeName) Then CheckCodeName = False
+
+    For Each Sheet In TargetBook.Worksheets
+        If SheetName = Sheet.Name Then
+            SheetExists = True
+            Exit Function
+        End If
+        
+        If SheetName = Sheet.CodeName And CheckCodeName = True Then
+            SheetExists = True
+            Exit Function
+        End If
+    Next
+    
+    SheetExists = False
+End Function
