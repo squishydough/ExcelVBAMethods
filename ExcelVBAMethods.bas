@@ -389,7 +389,7 @@ Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook
     Dim Sheet As Worksheet
 
     If TargetBook Is Nothing Then Set TargetBook = ActiveWorkbook
-    If IsMissing(CheckCodeName) Then CheckCodeName = False
+    If IsMissing(CheckCodeName) Then CheckCodeName = True
 
     For Each Sheet In TargetBook.Worksheets
         If SheetName = Sheet.Name Then
