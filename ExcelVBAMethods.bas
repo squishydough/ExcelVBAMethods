@@ -65,28 +65,18 @@ Private Sub ChangeRangeDimensions( _
     Optional ColumnOffset As Long _
 )
     
-    Dim NewRange As Range
-    Dim TargetRange As Range
-    
+    Dim NewRange As Range    
     Set NewRange = SourceRange
     
     With NewRange
         If RowOffset <> 0 Or ColumnOffset <> 0 Then
             Set NewRange = .Offset(RowOffset, ColumnOffset)
         End If
-    End With
-    
-    If HowManyRows <> 0 Or HowManyColumns <> 0 Then
-        If NewRange Is Nothing Then
-            Set TargetRange = SourceRange
-        Else
-            Set TargetRange = NewRange
-        End If
-        
-        With TargetRange
+
+        If HowManyRows <> 0 Or HowManyColumns <> 0 Then        
             Set NewRange = .Resize(.Rows.Count + HowManyRows, .Columns.Count + HowManyColumns)
-        End With
-    End If
+        End If
+    End With
     
     ActiveWorkbook.Names.Add Name:=SourceRange.Name.Name, RefersTo:=NewRange
 End Sub
