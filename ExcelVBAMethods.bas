@@ -55,6 +55,43 @@ Public Sub CenterUserForm(frm As Object)
 End Sub
 
 '----------------------------------------------------------------------------
+'   Description     :   Expands/shrinks/offsets a named range
+'----------------------------------------------------------------------------
+Private Sub ChangeRangeDimensions( _
+    SourceRange As Range, _
+    HowManyRows As Long, _
+    HowManyColumns As Long, _
+    Optional RowOffset As Long, _
+    Optional ColumnOffset As Long _
+)
+    
+    Dim NewRange As Range
+    Dim TargetRange As Range
+    
+    Set NewRange = SourceRange
+    
+    With NewRange
+        If RowOffset <> 0 Or ColumnOffset <> 0 Then
+            Set NewRange = .Offset(RowOffset, ColumnOffset)
+        End If
+    End With
+    
+    If HowManyRows <> 0 Or HowManyColumns <> 0 Then
+        If NewRange Is Nothing Then
+            Set TargetRange = SourceRange
+        Else
+            Set TargetRange = NewRange
+        End If
+        
+        With TargetRange
+            Set NewRange = .Resize(.Rows.Count + HowManyRows, .Columns.Count + HowManyColumns)
+        End With
+    End If
+    
+    ActiveWorkbook.Names.Add Name:=SourceRange.Name.Name, RefersTo:=NewRange
+End Sub
+
+'----------------------------------------------------------------------------
 '   Description     :   Removes illegal worksheet name characters
 '----------------------------------------------------------------------------
 Public Function CleanSheetName( _
