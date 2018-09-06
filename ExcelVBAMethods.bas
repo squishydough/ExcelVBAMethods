@@ -5,8 +5,9 @@ Public Sub AddRowToRange( _
     TargetRange As Range _
 )
 
+    Application.CutCopyMode = False
     With TargetRange
-        .Rows(.Rows.Count + 1).Insert CopyOrigin:=xlFormatFromLeftOrAbove
+        .Rows(.Rows.Count + 1).Insert Shift:=xlDown
         .Resize(.Rows.Count + 1, .Columns.Count).Name = .Name.Name
     End With
 End Sub
