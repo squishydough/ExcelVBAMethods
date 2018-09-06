@@ -1,18 +1,4 @@
 '---------------------------------------------------------------------------
-'   Description :   Adds a row to range and resizes the range
-'---------------------------------------------------------------------------
-Public Sub AddRowToRange( _
-    TargetRange As Range _
-)
-
-    Application.CutCopyMode = False
-    With TargetRange
-        .Rows(.Rows.Count + 1).Insert Shift:=xlDown
-        .Resize(.Rows.Count + 1, .Columns.Count).Name = .Name.Name
-    End With
-End Sub
-
-'---------------------------------------------------------------------------
 '   Description :   Allows the user to browse the computer for a file
 '---------------------------------------------------------------------------
 Public Function BrowseForFile( _
@@ -311,6 +297,20 @@ End Function
 Public Function GetLastUsedColumnLetter(SearchWhere As Variant, Optional TargetSheet As Worksheet) As String
     GetLastUsedColumnLetter = ColumnNumberToLetter(GetLastUsedColumnNumber(SearchWhere, TargetSheet))
 End Function
+
+'---------------------------------------------------------------------------
+'   Description :   Inserts a row in a range and resizes the range
+'---------------------------------------------------------------------------
+Public Sub InsertRowInRange( _
+    TargetRange As Range _
+)
+
+    Application.CutCopyMode = False
+    With TargetRange
+        .Rows(.Rows.Count + 1).Insert Shift:=xlDown
+        .Resize(.Rows.Count + 1, .Columns.Count).Name = .Name.Name
+    End With
+End Sub
 
 ' ---------------------------------------------------------------------------
 '   Description     :   Checks if a named range exists
