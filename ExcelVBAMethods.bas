@@ -65,15 +65,17 @@ Private Sub ChangeRangeDimensions( _
     Optional ColumnOffset As Long _
 )
     
-    Dim NewRange As Range    
+    Dim NewRange As Range
     Set NewRange = SourceRange
     
     With NewRange
         If RowOffset <> 0 Or ColumnOffset <> 0 Then
             Set NewRange = .Offset(RowOffset, ColumnOffset)
         End If
+    End With
 
-        If HowManyRows <> 0 Or HowManyColumns <> 0 Then        
+    With NewRange
+        If HowManyRows <> 0 Or HowManyColumns <> 0 Then
             Set NewRange = .Resize(.Rows.Count + HowManyRows, .Columns.Count + HowManyColumns)
         End If
     End With
