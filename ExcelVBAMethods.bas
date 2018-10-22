@@ -251,6 +251,8 @@ End Function
 '----------------------------------------------------------------------------
 '   Description     :   Returns the last used row in a column, range, or
 '                       worksheet. Column can be passed as a string or integer.
+'
+'   Requires        :   ColumnLetterToNumber method
 '----------------------------------------------------------------------------
 Public Function GetLastUsedRow(SearchWhere As Variant, Optional TargetSheet As Worksheet) As Long
     '**
