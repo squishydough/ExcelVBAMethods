@@ -45,7 +45,9 @@ End Function
 '----------------------------------------------------------------------------
 '   Description     :   Opens a userform and centers it on the user's screen
 '----------------------------------------------------------------------------
-Public Sub CenterUserForm(frm As Object)
+Public Sub CenterUserForm( _
+    frm As Object _
+)
     With frm
         .StartUpPosition = 0
         .Left = Application.ActiveWindow.Left + (0.5 * Application.Width) - (0.5 * .Width)
@@ -176,7 +178,7 @@ End Function
 
 ' ---------------------------------------------------------------------------
 '   Description     :   Returns a collection of dates between two dates
-'                       (including the passed dates) formatted in the passed 
+'                       (including the passed dates) formatted in the passed
 '                       FormatType.
 '
 '                       Default format type is the English spelling of the day.
@@ -254,7 +256,10 @@ End Function
 '
 '   Requires        :   ColumnLetterToNumber method
 '----------------------------------------------------------------------------
-Public Function GetLastUsedRow(SearchWhere As Variant, Optional TargetSheet As Worksheet) As Long
+Public Function GetLastUsedRow( _
+    SearchWhere As Variant, _
+    Optional TargetSheet As Worksheet _
+) As Long
     '**
     '*  If TargetSheet is not provided, default to activesheet
     '**
@@ -290,7 +295,10 @@ End Function
 '   Description     :   Returns the last used column in a row, range, or
 '                       worksheet as a number.
 '----------------------------------------------------------------------------
-Public Function GetLastUsedColumnNumber(SearchWhere As Variant, Optional TargetSheet As Worksheet) As Long
+Public Function GetLastUsedColumnNumber( _
+    SearchWhere As Variant, _
+    Optional TargetSheet As Worksheet _
+) As Long
     '**
     '*  If TargetSheet is not provided, default to activesheet
     '**
@@ -323,7 +331,10 @@ End Function
 '
 '   Requires        :   GetLastUsedColumnNumber, ColumnNumberToLetter
 '----------------------------------------------------------------------------
-Public Function GetLastUsedColumnLetter(SearchWhere As Variant, Optional TargetSheet As Worksheet) As String
+Public Function GetLastUsedColumnLetter( _
+    SearchWhere As Variant, _
+    Optional TargetSheet As Worksheet _
+) As String
     GetLastUsedColumnLetter = ColumnNumberToLetter(GetLastUsedColumnNumber(SearchWhere, TargetSheet))
 End Function
 
@@ -333,7 +344,6 @@ End Function
 Public Sub InsertRowInRange( _
     TargetRange As Range _
 )
-
     Application.CutCopyMode = False
     With TargetRange
         .Rows(.Rows.Count + 1).Insert Shift:=xlDown
@@ -415,7 +425,11 @@ End Sub
 ' ---------------------------------------------------------------------------
 '   Description     :   Checks if a worksheet exists
 ' ---------------------------------------------------------------------------
-Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook, Optional CheckCodeName = True) As Boolean
+Public Function SheetExists( _
+    SheetName As String, _
+    Optional TargetBook As Workbook, _
+    Optional CheckCodeName = True _
+) As Boolean
     Dim Sheet As Worksheet
 
     If TargetBook Is Nothing Then Set TargetBook = ActiveWorkbook
@@ -434,3 +448,4 @@ Public Function SheetExists(SheetName As String, Optional TargetBook As Workbook
     
     SheetExists = False
 End Function
+
